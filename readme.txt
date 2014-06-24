@@ -67,7 +67,7 @@ DOMPDF needs the proper font files to generate PDF files. There's a font adder u
 
 == Screenshots == 
 
-See example use of this plugin here: http://vetrospace.com/
+1. See example use of this plugin here: http://vetrospace.com/
 
 == Changelog ==
 
