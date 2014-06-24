@@ -1,5 +1,5 @@
 === Wordpress PDF Templates ===
-Contributors: Zuige
+Contributors: Zuige, ottok
 Tags: pdf, dompdf, templates, print
 Donate link: http://seravo.fi/
 Requires at least: 3.9.1
