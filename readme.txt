@@ -49,7 +49,8 @@ You can define supported post types in your theme functions.php with `set_pdf_pr
 
 The set_pdf_print_support function takes an array of post types (strings) as a parameter.
 
-Example: `// add pdf print support to post type 'product'
+Example: 
+`// add pdf print support to post type 'product'
 if(function_exists('set_pdf_print_support')) {
   set_pdf_print_support(array('post', 'page', 'product'));
 }`
@@ -58,7 +59,8 @@ if(function_exists('set_pdf_print_support')) {
 
 Yes! You can define settings for the DOMPDF Library by editing your wp-config.php.
 
-Example usage: `// use landscape A4 sized paper @ 180 DPI
+Example: 
+`// use landscape A4 sized paper @ 180 DPI
 define('DOMPDF_PAPER_SIZE', 'A4');
 define('DOMPDF_PAPER_ORIENTATION', 'landscape');
 define('DOMPDF_DPI', 180);`
