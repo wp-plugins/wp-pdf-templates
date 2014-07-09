@@ -35,11 +35,11 @@ Source available at https://github.com/anttiviljami/wp-pdf-templates
 
 Wordpress PDF Templates works quietly in the backround without cluttering your wp-admin with unnecessary menus and views.
 
-To see this plugin in action, try navigating to any post or page on your site and appending /pdf to the URL.
+To see this plugin in action, try navigating to any post or page on your site and appending /pdf/ to the URL.
 
 = I don't like the way my PDF printing looks. How do I change it? =
 
-Just copy the index-pdf.php from wp-content/plugins/wp-pdf-templates/ to your theme directory and start editing!
+Just copy index-pdf.php from wp-content/plugins/wp-pdf-templates/ into your theme directory and start editing!
 
 If you wish to define different templates for different post types, you can do that too! Let's say you wish to create a new PDF template for pages. Just create a file called 'page-pdf.php' and create your template there. Note that this only works when a page.php exists in your theme.
 
