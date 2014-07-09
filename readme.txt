@@ -1,10 +1,10 @@
 === Wordpress PDF Templates ===
-Contributors: Zuige, ottok
+Contributors: Zuige
 Tags: pdf, dompdf, templates, print
 Donate link: http://seravo.fi/
 Requires at least: 3.9.1
 Tested up to: 3.9.1
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -22,7 +22,7 @@ The PDF output can be customized by copying the index-pdf.php file from the plug
 
 Stylesheets used on the site are disabled by default, but you can define your own stylesheets within the pdf-template.php file. PDF Templates can be previewed as raw HTML at the /pdf-preview URL endpoint.
 
-Source available at https://github.com/seravo/wp-pdf-templates
+Source available at https://github.com/anttiviljami/wp-pdf-templates
 
 == Installation ==
 
@@ -67,9 +67,12 @@ DOMPDF needs the proper font files to generate PDF files. There's a font adder u
 
 == Screenshots == 
 
-1. See example use of this plugin here: http://vetrospace.com/
+See example use of this plugin here: http://vetrospace.com/
 
 == Changelog ==
+
+= 1.1 =
+HTML output is no longer based on output buffering, which makes everything more stable
 
 = 1.0 =
 Initial release to WordPress.org
