@@ -4,7 +4,7 @@ Tags: pdf, dompdf, templates, print
 Donate link: http://seravo.fi/
 Requires at least: 3.9.1
 Tested up to: 3.9.1
-Stable tag: 1.1
+Stable tag: 1.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -76,6 +76,9 @@ DOMPDF needs the proper font files to generate PDF files. There's a font adder u
 1. See example use of this plugin here: http://vetrospace.com/
 
 == Changelog ==
+
+= 1.2 =
+Cookies added to template requests
 
 = 1.1 =
 HTML output is no longer based on output buffering, which makes everything more stable
