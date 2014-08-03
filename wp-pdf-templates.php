@@ -3,7 +3,7 @@
  * Plugin Name: Wordpress PDF Templates
  * Plugin URI: http://seravo.fi
  * Description: This plugin utilises the DOMPDF Library to provide a URL endpoint e.g. /my-post/pdf/ that generates a downloadable PDF file.
- * Version: 1.3
+ * Version: 1.3.4
  * Author: Antti Kuosmanen (Seravo Oy)
  * Author URI: http://seravo.fi
  * License: GPLv3
@@ -51,7 +51,7 @@
 /*
  * Track plugin version number
  */
-define('WP_PDF_TEMPLATES_VERSION', '1.3');
+define('WP_PDF_TEMPLATES_VERSION', '1.3.4');
 
 /*
  * Option to disable PDF caching
@@ -62,7 +62,25 @@ define('WP_PDF_TEMPLATES_VERSION', '1.3');
  * Set PDF file cache directory
  */
 $upload_dir = wp_upload_dir();
-define('PDF_CACHE_DIRECTORY', $upload_dir['basedir'] . '/pdf-cache/');
+if (!defined('PDF_CACHE_DIRECTORY'))
+  define('PDF_CACHE_DIRECTORY', $upload_dir['basedir'] . '/pdf-cache/');
+
+
+/*
+ * Allow remote assets in docs
+ */
+if (!defined('DOMPDF_ENABLE_REMOTE'))
+  define('DOMPDF_ENABLE_REMOTE', true);
+
+/* 
+ * Redefine font directories
+ */
+if (!defined('DOMPDF_FONT_DIR'))
+  define('DOMPDF_FONT_DIR', $upload_dir['basedir'] . '/dompdf-fonts/');
+
+if (!defined('DOMPDF_FONT_CACHE'))
+  define('DOMPDF_FONT_CACHE', $upload_dir['basedir'] . '/dompdf-fonts/');
+
 
 /*
  * This function can be used to set PDF print support for custom post types.
@@ -128,7 +146,12 @@ function _init_dompdf_fonts() {
   if(!is_dir(DOMPDF_FONT_DIR)) {
     @mkdir(DOMPDF_FONT_DIR);
   }
-  copy(dirname(__FILE__) . '/dompdf/lib/fonts/dompdf_font_family_cache.dist.php', DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php');
+  if(!file_exists(DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php')) {
+    copy(
+      dirname(__FILE__) . '/dompdf/lib/fonts/dompdf_font_family_cache.dist.php', 
+      DOMPDF_FONT_DIR . '/dompdf_font_family_cache.dist.php'
+      );
+  }
 }
 
 /*
