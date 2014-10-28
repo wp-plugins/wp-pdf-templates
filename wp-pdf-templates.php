@@ -1,17 +1,17 @@
 <?php
 /**
  * Plugin Name: Wordpress PDF Templates
- * Plugin URI: http://seravo.fi
+ * Plugin URI: https://github.com/Seravo/wp-pdf-templates
  * Description: This plugin utilises the DOMPDF Library to provide a URL endpoint e.g. /my-post/pdf/ that generates a downloadable PDF file.
- * Version: 1.3.5
- * Author: Antti Kuosmanen (Seravo Oy)
+ * Version: 1.3.7
+ * Author: Seravo Oy
  * Author URI: http://seravo.fi
  * License: GPLv3
 */
 
 
 /**
- * Copyright 2014 Antti Kuosmanen / Seravo Oy
+ * Copyright 2014 Seravo Oy
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 3, as
@@ -56,8 +56,8 @@ define('WP_PDF_TEMPLATES_VERSION', '1.3.5');
 /*
  * Option to disable PDF caching
  *
- * This can be used for rapidly changing content that's uncacheable, such as 
- * dynamically generated feeds or user-tailored views. 
+ * This can be used for rapidly changing content that's uncacheable, such as
+ * dynamically generated feeds or user-tailored views.
  */
 //define('DISABLE_PDF_CACHE', true);
 
@@ -65,8 +65,8 @@ define('WP_PDF_TEMPLATES_VERSION', '1.3.5');
 /*
  * Option to enable cookies on fetching the PDF template HTML.
  *
- * This might be useful if the content or access to it depends on browser 
- * cookies. A possible use scenario for this could be when a login 
+ * This might be useful if the content or access to it depends on browser
+ * cookies. A possible use scenario for this could be when a login
  * authentification is required to access the content.
  */
 //define('FETCH_COOKIES_ENABLED', true);
@@ -199,26 +199,30 @@ function _use_pdf_template() {
 
     }
 
+    // our post permalink
+    $link = get_the_permalink();
+
     if(isset($wp_query->query_vars['pdf']) || isset($wp_query->query_vars['pdf-preview'])) {
 
-      // reconstruct cookies into header form
-      $cookies = array();
-      foreach($_COOKIE as $ckey => $cval) {
-        $cookies[] = $ckey . '=' . $cval;
-      }
-
-      // load the generated html from the template endpoint
-      $link = get_the_permalink();
-
       if( defined('FETCH_COOKIES_ENABLED') && FETCH_COOKIES_ENABLED ) {
-        // do the request using cookies provided
+
+        // we want a html template
+        $header = 'Accept:text/html' . "\n";
+
+        // pass cookies from current request
+        if( isset( $_SERVER['HTTP_COOKIE'] ) ) {
+          $header .= 'Cookie: ' . $_SERVER['HTTP_COOKIE'] . "\n";
+        }
+
+        // create a request context for file_get_contents
         $context = stream_context_create(array(
           'http' => array(
             'method' => 'GET',
-            'header' => 'Accept:text/html' . "\n" .
-                        'Cookie: ' . join($cookies, '; '),
+            'header' => $header,
           )
         ));
+
+        // load the generated html from the template endpoint
         $html = file_get_contents($link . (strpos($link, '?') === false ? '?' : '&') . 'pdf-template', false, $context);
       }
 
