@@ -3,7 +3,7 @@
  * Plugin Name: Wordpress PDF Templates
  * Plugin URI: https://github.com/Seravo/wp-pdf-templates
  * Description: This plugin utilises the DOMPDF Library to provide a URL endpoint e.g. /my-post/pdf/ that generates a downloadable PDF file.
- * Version: 1.3.6
+ * Version: 1.3.7
  * Author: Seravo Oy
  * Author URI: http://seravo.fi
  * License: GPLv3
@@ -199,29 +199,30 @@ function _use_pdf_template() {
 
     }
 
+    // our post permalink
+    $link = get_the_permalink();
+
     if(isset($wp_query->query_vars['pdf']) || isset($wp_query->query_vars['pdf-preview'])) {
 
-      // reconstruct cookies into header form
-      $cookies = array();
-      foreach($_COOKIE as $ckey => $cval) {
-        // disregard any cookies whose keys contain disallowed characters
-        if( preg_match('/[0-9a-zA-Z_-]/', $ckey ) ) {
-          $cookies[] = $ckey . '=' . rawurlencode( $cval ); // values should be urlencoded
-        }
-      }
-
-      // load the generated html from the template endpoint
-      $link = get_the_permalink();
-
       if( defined('FETCH_COOKIES_ENABLED') && FETCH_COOKIES_ENABLED ) {
-        // do the request using cookies provided
+
+        // we want a html template
+        $header = 'Accept:text/html' . "\n";
+
+        // pass cookies from current request
+        if( isset( $_SERVER['HTTP_COOKIE'] ) ) {
+          $header .= 'Cookie: ' . $_SERVER['HTTP_COOKIE'] . "\n";
+        }
+
+        // create a request context for file_get_contents
         $context = stream_context_create(array(
           'http' => array(
             'method' => 'GET',
-            'header' => 'Accept:text/html' . "\n" .
-                        'Cookie: ' . join($cookies, '; '),
+            'header' => $header,
           )
         ));
+
+        // load the generated html from the template endpoint
         $html = file_get_contents($link . (strpos($link, '?') === false ? '?' : '&') . 'pdf-template', false, $context);
       }
 
